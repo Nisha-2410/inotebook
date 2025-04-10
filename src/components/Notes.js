@@ -3,7 +3,7 @@ import noteContext from "../Context/notes/noteContext";
 import Notesitem from "./Notesitem";
 import Addanote from "./Addanote";
 
-const Notes = () => {
+const Notes = (props) => {
   const Context = useContext(noteContext);
   const { notes, getallnote ,editanote} = Context;
 
@@ -19,12 +19,14 @@ const Notes = () => {
   const updateNote = (currentnote) => {
     ref.current.click();
     setNote({id : currentnote._id ,etitle:currentnote.title , edescription: currentnote.description , etag : currentnote.tag})
+   
   };
 
   const handleClick = () => {
    
     editanote(note.id,note.etitle,note.edescription,note.etag)
     console.log("updatingh the value")
+    props.showAlert("Updated successfully","success")
     
     refclose.current.click();
     
@@ -37,7 +39,7 @@ const Notes = () => {
 
   return (
     <>
-      <Addanote />
+      <Addanote showAlert={props.showAlert} />
 
       <button
         type="button"
@@ -147,7 +149,7 @@ const Notes = () => {
        </div>
         {notes.map((note) => {
           return (
-            <Notesitem key={note._id} updateNote={updateNote} note={note} />
+            <Notesitem key={note._id} updateNote={updateNote} note={note}  showAlert={props.showAlert}/>
           );
         })}
       </div>
