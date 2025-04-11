@@ -3,72 +3,8 @@ import noteContext from "./noteContext";
 
 const NoteState = (props) => {
   const host= "http://localhost:5000"
-  const notesinitial = [
-    {
-      user: "67d29aca5dfac7b3b02e145d",
-      title: "mytitle",
-      description: "this is desc",
-      tag: "thisistag",
-      _id: "67dff5b0b1a54929a1176e15",
-      date: "2025-03-23T11:51:12.633Z",
-      __v: 0,
-    },
-    {
-      user: "67d29aca5dfac7b3b02e145d",
-      title: "mytitle",
-      description: "this is desc",
-      tag: "thisistag",
-      _id: "67dff5b0b1a54929a1176e16",
-      date: "2025-03-23T11:51:12.633Z",
-      __v: 0,
-    },
-    {
-      user: "67d29aca5dfac7b3b02e145d",
-      title: "mytitle",
-      description: "this is desc",
-      tag: "thisistag",
-      _id: "67dff5b0b1a54929a1176e17",
-      date: "2025-03-23T11:51:12.633Z",
-      __v: 0,
-    },
-    {
-      user: "67d29aca5dfac7b3b02e145d",
-      title: "mytitle",
-      description: "this is desc",
-      tag: "thisistag",
-      _id: "67dff5b0b1a54929a1176e18",
-      date: "2025-03-23T11:51:12.633Z",
-      __v: 0,
-    },
-    {
-      user: "67d29aca5dfac7b3b02e145",
-      title: "mytitle",
-      description: "this is desc",
-      tag: "thisistag",
-      _id: "67dff5b0b1a54929a1176e19",
-      date: "2025-03-23T11:51:12.633Z",
-      __v: 0,
-    },
-    {
-      user: "67d29aca5dfac7b3b02e145d",
-      title: "mytitle",
-      description: "this is desc",
-      tag: "thisistag",
-      _id: "67dff5b0b1a54929a1176e11",
-      date: "2025-03-23T11:51:12.633Z",
-      __v: 0,
-    },
-    {
-      user: "67d29aca5dfac7b3b02e145d",
-      title: "mytitle",
-      description: "this is desc",
-      tag: "thisistag",
-      _id: "67dff5b0b1a54929a1176e12",
-      date: "2025-03-23T11:51:12.633Z",
-      __v: 0,
-    },
-  ];
-  const [notes, setNotes] = useState(notesinitial);
+  
+  const [notes, setNotes] = useState([]);
 
 
   //get all notes
@@ -80,14 +16,15 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdkMjlhY2E1ZGZhYzdiM2IwMmUxNDVkIn0sImlhdCI6MTc0MjAyMTAyNn0.W2v0YANLVZgsoR9O0Cbpa0YmiXg6fiH8tbRO6VYR7Lc"
+        "auth-token":localStorage.getItem("token")
       }
       
     });
     const json= await response.json();
     console.log(json);
     
-    setNotes(json);
+    setNotes(json || []);
+
   };
 
 
@@ -151,8 +88,10 @@ const NoteState = (props) => {
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": localStorage.getItem("token")
-      },
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token")
+      }
+      ,
       body: JSON.stringify({ title,description,tag  }),
       // ...
     });
