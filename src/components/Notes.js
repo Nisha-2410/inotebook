@@ -2,15 +2,25 @@ import React, { useContext, useEffect,useRef,useState } from "react";
 import noteContext from "../Context/notes/noteContext";
 import Notesitem from "./Notesitem";
 import Addanote from "./Addanote";
+import { useNavigate } from "react-router-dom";
+
 
 const Notes = (props) => {
   const Context = useContext(noteContext);
   const { notes, getallnote ,editanote} = Context;
-
+  let navigate = useNavigate();
+  
   useEffect(() => {
-    getallnote();
-    // eslint-disable-next-line
-  }, []);
+    const token = localStorage.getItem("token");
+    console.log("Token in Notes.js:", token); // Debug check
+    if (!token) {
+      navigate("/login");
+    } else {
+      getallnote();
+    }
+  }, [navigate]);// keep navigate in dependency just in case
+  
+  
    const ref= useRef(null);
    const refclose= useRef(null);
 
