@@ -3,13 +3,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = (props) => {
-  const [credentials, setcredentials] = useState({name:"",email:"" , password:"",cpassword:""});
+  const [credentials, setcredentials] = useState({name:"",email:"" , password:""});
   const navigate = useNavigate();
-  const {name,email,password,cpassword} = credentials;
+  const {name,email,password} = credentials;
   const handleSubmit=async(e)=>{
     
       e.preventDefault();
-      const response = await fetch("http://localhost:5000/api/auth/createuser", {
+      const response = await fetch("https://your-backend.vercel.app/api/auth/createuser", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const Signup = (props) => {
   return (
     <>
       <div className="container my-3">
-        <h2>Please Signin to use iNotebook</h2>
+        <h2>Please Signup to use iNotebook</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">

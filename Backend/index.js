@@ -5,7 +5,9 @@ var cors = require('cors')
 connectDB();
 
 const app = express()
-app.use(cors())
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://inotebook-gr6b.vercel.app/']
+}));
 
 const port = 5000
 
